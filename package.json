@@ -2,18 +2,17 @@
   "name": "sb-nightwatch",
   "version": "1.0.0",
   "description": "Sample automation suite for Swissborg",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx nightwatch --require cucumber.conf.js --format json:report/cucumber_report.json --reporter=json && npm run generate_report",
+    "generate_report": "node utils/report.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Kieran Marriott",
   "license": "ISC",
   "devDependencies": {
     "@cucumber/cucumber": "^10.3.1",
     "nightwatch": "^3.4.0"
+  },
+  "dependencies": {
+    "multiple-cucumber-html-reporter": "^3.6.2"
   }
 }

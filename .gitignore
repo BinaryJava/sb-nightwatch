@@ -2,3 +2,6 @@ node_modules/
 logs/
 screenshots/
 test-report/
+report/
+tests_output/
+.DS_STORE
