@@ -1,33 +1,16 @@
-const {Given, Then, When, Before} = require('@cucumber/cucumber');
+const {Given, Then, When} = require('@cucumber/cucumber');
 
-Given(/^I open the Rijksmuseum page$/, function() {
-  return browser.navigateTo('https://www.rijksmuseum.nl/en');
-});
+const SharedPageObject = require('../pageObjects/shared/sharedPageObject.js')
+const FactorialPageObject = require('../pageObjects/webpage/factorialPageObject.js')
 
-Given(/^I dismiss the cookie dialog$/, async function() {
-  const cookieDialogVisible = await browser.isVisible({
-    selector: '.cookie-consent-bar-wrap',
-    suppressNotFoundErrors: true
-  });
+const sharedPageObject = new SharedPageObject()
+const factorialPageObject = new FactorialPageObject()
 
-  if (cookieDialogVisible) {
-    return browser.click('.cookie-consent-bar-wrap button.link');
-  }
-});
+Given('I open the factorial calculator page', async () => {
+  await sharedPageObject.navigateToFactorialPage()
+})
 
-Given(/^I search "([^"]*)"$/, async function(searchTerm) {
-  // FIXME: chaining the click command to the rest of the commands causes an uncaughtRejection in case of an element locate error
-  await browser.pause(1000).click('a[aria-label="Search"]');
+Then('I calculate all the factorials between {string} and {string}', async (lowerBound, upperBound) => {
+  await factorialPageObject.verifyFactorialCalculation(lowerBound, upperBound)
+})
 
-  return browser.waitForElementVisible('#rijksmuseum-app')
-    .setValue('input.search-bar-input[type=text]', [searchTerm, browser.Keys.ENTER])
-    .pause(1000);
-});
-
-Then(/^the title is "([^"]*)"$/, function(title) {
-  return browser.assert.titleEquals(title);
-});
-
-Then(/^Body contains "([^"]*)"$/, function(contains) {
-  return  browser.assert.textContains('.search-results', contains);
-});
