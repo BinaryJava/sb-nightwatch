@@ -6,17 +6,18 @@ class FactorialPageObject extends SharedPageObject {
   FACTORIAL_ANSWER = 'p[id="resultDiv"]'
 
   async verifyFactorialCalculation (lowerBound, upperBound) {
+    const failedValues = []
     for (let inputValue = lowerBound; inputValue <= upperBound; inputValue++) {
-      await this.input(this.INPUT_BOX, inputValue)
-      await this.select(this.CALCULATE_BUTTON)
-      await this.verifyAnswer(inputValue)
-      await this.clearValue(this.INPUT_BOX)
+      this.input(this.INPUT_BOX, inputValue)
+      this.select(this.CALCULATE_BUTTON)
+      this.verifyAnswer(inputValue)
+      this.clearValue(this.INPUT_BOX)
     }
   }
 
-  async verifyAnswer (inputValue) {
-    const expectedResult = await this.factorial(inputValue)
-    await browser.assert.textEquals(this.FACTORIAL_ANSWER, `The factorial of ${inputValue} is: ${expectedResult}`)
+  verifyAnswer (inputValue) {
+    const expectedResult = this.factorial(inputValue)
+    this.textContains(this.FACTORIAL_ANSWER, `The factorial of ${inputValue} is: ${expectedResult}`, 1000)
   }
 }
 

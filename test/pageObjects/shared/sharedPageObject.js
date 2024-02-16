@@ -1,30 +1,35 @@
 class SharedPageObject {
-    async navigateToFactorialPage () {
-      await browser.navigateTo('https://qainterview.pythonanywhere.com/');
+    navigateToFactorialPage () {
+      browser.navigateTo('https://qainterview.pythonanywhere.com/');
     }
 
-    async select (element) {
-      await browser.element.find(element).click()
+    textContains (element, text, timeout) {
+      browser.expect.element(element).text.to.contain(text).before(timeout)
     }
 
-    async input (element, text) {
-      await browser.element.find(element).sendKeys(text);
+    select (element) {
+      browser.element.find(element).click()
     }
 
-    async clearValue (element) {
-      await browser.element.find(element).clear()
+    input (element, text) {
+      browser.element.find(element).sendKeys(text);
+    }
+
+    clearValue (element) {
+      browser.element.find(element).clear()
     }
 
     async getText (element) {
-      await browser.element.find(element).getText()
+      const textValue = await browser.element.find(element).getText().value
+      return textValue
     }
 
-    async factorial (integer) {
-      let answer = integer
-      for (let i = integer - 1; i > 0; i--) {
-        answer = answer * i
+    factorial (integer) {
+      let answer = BigInt(1)
+      for (let i = BigInt(2); i <= integer; i++) {
+        answer *= BigInt(i)
       }
-      return answer
+      return Number(answer.toString()).toPrecision()
     }
 }
 

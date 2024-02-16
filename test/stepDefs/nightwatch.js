@@ -6,11 +6,11 @@ const FactorialPageObject = require('../pageObjects/webpage/factorialPageObject.
 const sharedPageObject = new SharedPageObject()
 const factorialPageObject = new FactorialPageObject()
 
-Given('I open the factorial calculator page', async () => {
-  await sharedPageObject.navigateToFactorialPage()
+Given('I open the factorial calculator page', () => {
+  sharedPageObject.navigateToFactorialPage()
 })
 
-Then('I calculate all the factorials between {string} and {string}', async (lowerBound, upperBound) => {
-  await factorialPageObject.verifyFactorialCalculation(lowerBound, upperBound)
+Then('I calculate all the factorials between {string} and {string}', (lowerBound, upperBound) => {
+  factorialPageObject.verifyFactorialCalculation(lowerBound, upperBound)
 })
 
