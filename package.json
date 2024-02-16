@@ -1,7 +1,7 @@
 {
   "name": "sb-nightwatch",
   "version": "1.0.0",
-  "description": "Sample automation suite for Swissborg",
+  "description": "Sample automation suite with cucumber",
   "scripts": {
     "test": "npx nightwatch --require cucumber.conf.js --format json:report/cucumber_report.json --reporter=json && npm run generate_report",
     "generate_report": "node utils/report.js"
